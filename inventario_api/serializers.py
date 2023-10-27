@@ -12,11 +12,14 @@ class ProductoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AlmacenSerializer(serializers.ModelSerializer):
+    capacidad_actual = serializers.IntegerField(required=False)
     class Meta:
         model = Almacen
         fields = '__all__'
 
 class InventarioSerializer(serializers.ModelSerializer):
+    subtotal = serializers.DecimalField(max_digits=10, decimal_places=2, required=False)
+
     class Meta:
         model = Inventario
         fields = '__all__'
