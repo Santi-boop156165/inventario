@@ -25,6 +25,7 @@ class InventarioSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class TransaccionSerializer(serializers.ModelSerializer):
+    total = serializers.DecimalField(max_digits=10, decimal_places=2, required=False)
     class Meta:
         model = Transaccion
         fields = '__all__'

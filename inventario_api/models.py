@@ -40,6 +40,7 @@ class Inventario(models.Model):
 
 class Transaccion(models.Model):
     id = models.AutoField(primary_key=True)
-    almacen_id = models.ForeignKey(Almacen, on_delete=models.CASCADE)
+    inventario_id = models.ForeignKey(Inventario, on_delete=models.CASCADE)
     cantidad= models.IntegerField()
     fecha = models.DateTimeField(auto_now_add=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
