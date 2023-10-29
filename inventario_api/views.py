@@ -235,4 +235,36 @@ class TransaccionApiView(APIView):
         serializer = TransaccionSerializer(transaccion, many=True)
         return Response({"message" :"succes","transacciones": serializer.data}, status=status.HTTP_200_OK) 
     
+    def post(self, request):
+        serializer=TransaccionSerializer(data=request.data)
+        if serializer.is_valid():
+            inventario_id=serializer.validated_data.get('inventario_id').id
+            inventario=Inventario.objects.get(id=inventario_id)
+            
+            producto_id=inventario.producto_id.id
+            producto=Producto.objects.get(id=producto_id)
+            
+            almacen_id=inventario.almacen_id.id
+            almacen=Almacen.objects.get(id=almacen_id)
+            
+            cantidad_transaccion=serializer.validated_data.get('cantidad')
+            cantidad_de_producto_total_inventario=inventario.cantidad_de_producto-cantidad_transaccion
+            if cantidad_de_producto_total_inventario >= 5:
+                with transaction.atomic():
+                    
+                    serializer.validated_data['total']=producto.precio * cantidad_transaccion
+                    
+                    inventario.cantidad_de_producto=F('cantidad_de_producto') - cantidad_transaccion
+                    
+                    inventario.subtotal=F('subtotal') - producto.precio * cantidad_transaccion
+                    
+                    almacen.capacidad_actual= F('capacidad_actual') + cantidad_transaccion
+                    
+                    almacen.save()
+                    inventario.save()
+                    serializer.save()    
+                return Response({"message": "Se creo correctamente la transaccion"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "supera la cantidad maxima de compra del inventario"   }, status=status.HTTP_400_BAD_REQUEST)                
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
         
