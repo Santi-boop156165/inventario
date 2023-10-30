@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-z4c8s3$hr@f006d@wix3)6z_ny++ysd4i%+yd&9r)9)y_8kt)r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -37,13 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "corsheaders",
     'inventario_api'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -51,6 +54,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'inventario.urls'
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+     'http://127.0.0.1:5173',
+     'http://127.0.0.1:8000'
+]
+
+
+CORS_ALLOW_ALL_METHODS = True
 
 TEMPLATES = [
     {
@@ -80,7 +91,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': '123456',
         'NAME': 'inventario',
         'OPTIONS': {
              'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"

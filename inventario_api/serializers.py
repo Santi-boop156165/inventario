@@ -7,6 +7,7 @@ class ProveedorSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProductoSerializer(serializers.ModelSerializer):
+    proveedor = ProveedorSerializer(read_only=True)
     class Meta:
         model = Producto
         fields = '__all__'
