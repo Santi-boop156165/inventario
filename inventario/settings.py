@@ -87,16 +87,16 @@ WSGI_APPLICATION = 'inventario.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'NAME': 'inventario',
+        'ENGINE': 'mssql',
+        'NAME': 'cloudInventario',
+        'USER': 'devAzureRoot',
+        'PASSWORD': 'devAzure123#',
+        'HOST': 'azurecloudinv.database.windows.net',
+        'PORT': '1433',
         'OPTIONS': {
-             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-        }
-    }
+            'driver': 'ODBC Driver 17 for SQL Server',
+        },
+    },
 }
 
 
