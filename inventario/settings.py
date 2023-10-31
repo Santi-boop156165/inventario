@@ -58,7 +58,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
      'http://127.0.0.1:5173',
      'http://127.0.0.1:8000',
-    'https://front-inventario.vercel.app'
+    'https://front-inventario-y2ci.vercel.app'
 ]
 
 
