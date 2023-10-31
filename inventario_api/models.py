@@ -34,6 +34,7 @@ class Inventario(models.Model):
     id = models.AutoField(primary_key=True)
     producto_id = models.ForeignKey(Producto, on_delete=models.CASCADE)
     almacen_id = models.ForeignKey(Almacen, on_delete=models.CASCADE)
+    codigo_ref = models.CharField(max_length=100)
     fecha_de_creacion = models.DateTimeField(auto_now_add=True) 
     cantidad_de_producto = models.IntegerField() 
     subtotal = models.DecimalField(max_digits=10, decimal_places=2)  
