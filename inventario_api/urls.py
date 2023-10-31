@@ -11,6 +11,7 @@ urlpatterns = [
     path('inventarios', InventariosApiView.as_view(), name="listar_inventarios"),
     path('inventarios/<int:id>', InventariosApiView.as_view(), name="procesar_inventarios"),
     path('transacciones', TransaccionApiView.as_view(), name="listar_transacciones"),
+    path('transacciones/<int:id>', TransaccionApiView.as_view(), name="procesar_transacciones"),
 
 
 ]
