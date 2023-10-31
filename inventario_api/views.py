@@ -95,22 +95,22 @@ class ProductoApiView(APIView):
     
 class AlmacenApiView(APIView):
 
-    def get(self, request, id=0):
-        if id > 0:
+    def get(self, request, id=0): #busqueda por id y verificar que en los casos de uso tenga errores coherentes
+        if id>0:
             try:
-                transaccion = Transaccion.objects.get(id=id)
-                serializer = TransaccionSerializer(transaccion)
-                data = {
-                    "message": "Transaccion encontrada",
-                    "transaccion": serializer.data
+                almacen=Almacen.objects.get(id=id)
+                serializer=AlmacenSerializer(almacen)
+                data={
+                    "message":"almacen encontrado",
+                    "almacen":serializer.data
                 }
                 return Response(data, status=status.HTTP_200_OK)
-            except Transaccion.DoesNotExist:
-                return Response({"message": "Transaccion no encontrada"}, status=status.HTTP_404_NOT_FOUND)
+            except Almacen.DoesNotExist:
+                return Response({"message":"Almacen no encontrado"}, status=status.HTTP_404_NOT_FOUND)
         else:
-            transacciones = Transaccion.objects.all()
-            serializer = TransaccionSerializer(transacciones, many=True)
-            return Response({"message": "success", "transacciones": serializer.data}, status=status.HTTP_200_OK)
+            almacen = Almacen.objects.all()
+            serializer = AlmacenSerializer(almacen, many=True)
+            return Response({"message" :"succes","almacenes": serializer.data}, status=status.HTTP_200_OK)
     
     def post(self, request): #verificar que en los casos de uso tenga errores coherentes
         serializer = AlmacenSerializer(data=request.data)
@@ -230,10 +230,22 @@ class InventariosApiView(APIView):
         
 class TransaccionApiView(APIView):
 
-    def get(self, request):
-        transaccion = Transaccion.objects.all()
-        serializer = TransaccionSerializer(transaccion, many=True)
-        return Response({"message" :"succes","transacciones": serializer.data}, status=status.HTTP_200_OK) 
+    def get(self, request, id=0):
+        if id > 0:
+            try:
+                transaccion = Transaccion.objects.get(id=id)
+                serializer = TransaccionSerializer(transaccion)
+                data = {
+                    "message": "Transaccion encontrada",
+                    "transaccion": serializer.data
+                }
+                return Response(data, status=status.HTTP_200_OK)
+            except Transaccion.DoesNotExist:
+                return Response({"message": "Transaccion no encontrada"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            transacciones = Transaccion.objects.all()
+            serializer = TransaccionSerializer(transacciones, many=True)
+            return Response({"message": "success", "transacciones": serializer.data}, status=status.HTTP_200_OK)
     
     def post(self, request):
         serializer=TransaccionSerializer(data=request.data)
